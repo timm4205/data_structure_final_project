@@ -1,5 +1,6 @@
 data_structure_final_project
 void algorithm_A(Board board, Player player, int index[]){
+	srand(time(NULL)*time(NULL));
     int row, col;
     int cap,orb;
     int color = player.get_color();
@@ -8,6 +9,8 @@ void algorithm_A(Board board, Player player, int index[]){
     int tem_place_max = 0;
     int tem_row;
     int tem_col;
+    int tem_neighbor;
+    int N;
     place[0][0] = 2;
     place[0][5] = 2;
     place[4][0] = 2;
@@ -29,6 +32,7 @@ void algorithm_A(Board board, Player player, int index[]){
     	for(int j=0 ; j<6 ; j++)
     	{
     		x = y = z = t = 4;
+    		N = 0;
     		if(board.get_cell_color(i, j) != color && board.get_cell_color(i, j) != 'w')
     		{
     			place[i][j] = 0;
@@ -42,6 +46,10 @@ void algorithm_A(Board board, Player player, int index[]){
 				{
 					x = board.get_capacity(i-1,j) - board.get_orbs_num(i-1,j);
 				}
+				else if(board.get_cell_color(i-1, j) == color)
+				{
+					N+=1;
+				}
 			}
 			if(i+1 <= 4)
 			{
@@ -49,6 +57,10 @@ void algorithm_A(Board board, Player player, int index[]){
 				{
 					y = board.get_capacity(i+1,j) - board.get_orbs_num(i+1,j);
 				}	
+				else if(board.get_cell_color(i+1, j) == color)
+				{
+					N+=1;
+				}
 			}
 			if(j-1 >= 0)
 			{
@@ -56,13 +68,21 @@ void algorithm_A(Board board, Player player, int index[]){
 				{
 					z = board.get_capacity(i,j-1) - board.get_orbs_num(i,j-1);
 				}	
+				else if(board.get_cell_color(i, j-1) == color)
+				{
+					N+=1;
+				}
 			}
 			if(j+1 <= 5)
 			{
 				if(board.get_cell_color(i, j+1) != color && board.get_cell_color(i, j+1) != 'w')
 				{
 					t = board.get_capacity(i,j+1) - board.get_orbs_num(i,j+1);
-				}	
+				}
+				else if(board.get_cell_color(i, j+1) == color)
+				{
+					N+=1;
+				}
 			}
 			if(x<y)
 			{
@@ -174,10 +194,20 @@ void algorithm_A(Board board, Player player, int index[]){
 				tem_place_max = place[i][j];
 				tem_row = i;
     			tem_col = j;
+    			tem_neighbor = N;
+			}
+			else if(tem_place_max == place[i][j])
+			{
+				if(N < tem_neighbor)
+				{
+					tem_place_max = place[i][j];
+					tem_row = i;
+    				tem_col = j;
+    				tem_neighbor = N;
+				}
 			}
     	}
     }
-	
     index[0] = tem_row;
     index[1] = tem_col;
 }
