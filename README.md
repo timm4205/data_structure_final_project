@@ -1,6 +1,5 @@
 data_structure_final_project
 void algorithm_A(Board board, Player player, int index[]){
-	srand(time(NULL)*time(NULL));
     int row, col;
     int cap,orb;
     int color = player.get_color();
