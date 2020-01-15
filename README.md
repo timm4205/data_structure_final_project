@@ -177,6 +177,7 @@ void algorithm_A(Board board, Player player, int index[]){
 			}
     	}
     }
+	
     index[0] = tem_row;
     index[1] = tem_col;
 }
